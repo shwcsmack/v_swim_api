@@ -1,6 +1,6 @@
 use std::net::TcpListener;
-use v_swim_api::startup::run;
 use v_swim_api::configuration::get_configuration;
+use v_swim_api::startup::run;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {

@@ -1,6 +1,6 @@
-use sqlx::{PgConnection, Connection};
-use v_swim_api::configuration::get_configuration;
+use sqlx::{Connection, PgConnection};
 use std::net::TcpListener;
+use v_swim_api::configuration::get_configuration;
 
 #[actix_rt::test]
 async fn health_check_works() {
@@ -52,7 +52,7 @@ async fn subscribe_returns_a_400_when_data_is_missing() {
     let test_cases = vec![
         ("name=shayne", "missing the email"),
         ("email=shayne%40gmail.com", "missing the name"),
-        ("", "missing both name and email")
+        ("", "missing both name and email"),
     ];
 
     for (invalid_body, error_message) in test_cases {
@@ -74,8 +74,7 @@ async fn subscribe_returns_a_400_when_data_is_missing() {
 }
 
 fn spawn_app() -> String {
-    let listener = TcpListener::bind("127.0.0.1:0")
-        .expect("Failed to bind to port");
+    let listener = TcpListener::bind("127.0.0.1:0").expect("Failed to bind to port");
     let port = listener.local_addr().unwrap().port();
     let server = v_swim_api::startup::run(listener).expect("Failed to bind address");
 
